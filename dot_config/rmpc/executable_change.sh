@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 source ~/.env/RMPC_DEFAULT_ART_DIR
 source ~/.env/USR_MUSIC_DIR
