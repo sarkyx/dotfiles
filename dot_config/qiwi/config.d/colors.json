@@ -9,7 +9,7 @@
 			"magenta": "#999999",
 			"cyan": "#aaaaaa",
 			"white": "#c0c0c0",
-
+			
 			"gray": "#333333",
 			"brightRed": "#773333",
 			"brightGreen": "#dd9999",
@@ -19,7 +19,7 @@
 			"brightCyan": "#aaaaaa",
 			"brightWhite": "#c0c0c0"
 		},
-
+		
 		"Special": {
 			"background": "#000000",
 			"foreground": "#c0c0c0",

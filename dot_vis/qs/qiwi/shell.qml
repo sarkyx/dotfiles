@@ -8,15 +8,15 @@ import "mod/proc"
 
 ShellRoot {
 	id: root
-
+	
 	Variants {
 		id: screenVariants
 		model: Quickshell.screens
-
+		
 		delegate: TopBar {
 			property var modelData
 			screen: modelData
-
+			
 			Launcher {}
 		}
 	}

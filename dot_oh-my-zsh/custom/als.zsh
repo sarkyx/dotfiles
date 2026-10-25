@@ -18,6 +18,9 @@ ytdl() {
 }
 
 # convenience - other
+alias :q='exit'
+alias :wq='exit'
+alias q='exit'
 alias rsync-exfat='sudo rsync -rltDv --delete --modify-window=1 --progress'
 alias aster='astroterm -Cubcl 2.5 -r $(( (0.0+COLUMNS) / (0.0+LINES) ))'
 cdgame() { cd $USR_GAME_DIR/$@ }

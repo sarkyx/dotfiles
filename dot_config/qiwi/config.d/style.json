@@ -4,7 +4,7 @@
 			"fontFamily": "MonaspiceKr NFM",
 			"backgroundOpacity": 0.75
 		},
-
+		
 		"TopBar": {
 			"borderWidth": 2,
 			"animationSlowdown": 2,
@@ -15,7 +15,7 @@
 			"panelSlantPx": 36,
 			"exclusiveZoneBool": true
 		},
-
+		
 		"SideBar": {
 			"borderWidth": 2,
 			"animationSlowdown": 1,
@@ -24,7 +24,7 @@
 			"panelWidthPx": 42,
 			"panelSlantPx": 36
 		},
-
+		
 		"BottomBar": {
 			"borderWidth": 2,
 			"animationSlowdown": 1
