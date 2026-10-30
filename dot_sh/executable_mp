@@ -181,7 +181,7 @@ kittyprev="printf \"${kp_txt_prefx} ${kp_txt_col1}TITLE:${kp_txt_col0} \$(mpc -f
 
 symbolsprev="{ ${exif_grab} || ${ffmpeg_grab} || ${mpc_grab} } | ${sp_chafa_img} 2>/dev/null || echo"
 
-binds='ctrl-o:select-all,ctrl-x:deselect-all,ctrl-n:toggle-all,f1:reload(mpc listall -f %file%\\t$MPC_FORMAT)+change-preview-label(),f2:reload(mpc listall -f %file%\\t$MPC_FORMAT|shuf)+change-preview-label([ SHUF ]),f3:change-with-nth(1|2),f4:execute-silent(mpc -q crop),enter:print(MPMODE::CLEAR)+accept,ctrl-space:print(MPMODE::TAILP)+accept,alt-space:print(MPMODE::NEXTP)+accept,ctrl-bs:print(MPMODE::TAILQ)+accept,alt-bs:print(MPMODE::NEXTQ)+accept'
+binds='ctrl-l:execute(clear),ctrl-o:select-all,ctrl-x:deselect-all,ctrl-n:toggle-all,f1:reload(mpc listall -f %file%\\t$MPC_FORMAT)+change-preview-label(),f2:reload(mpc listall -f %file%\\t$MPC_FORMAT|shuf)+change-preview-label([ SHUF ]),f3:change-with-nth(1|2),f4:execute-silent(mpc -q crop),enter:print(MPMODE::CLEAR)+accept,ctrl-space:print(MPMODE::TAILP)+accept,alt-space:print(MPMODE::NEXTP)+accept,ctrl-bs:print(MPMODE::TAILQ)+accept,alt-bs:print(MPMODE::NEXTQ)+accept'
 
 prevwin='top,50%'
 

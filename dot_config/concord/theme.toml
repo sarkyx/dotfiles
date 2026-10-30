@@ -1,0 +1,12 @@
+[ui.border]
+default = "plain"
+pane = "quadrant_outside"
+composer = "thick"
+modal = "quadrant_outside"
+picker = "quadrant_outside"
+login = "quadrant_outside"
+message = "plain"
+forum = "plain"
+
+[ui.indicator]
+selection = "▶ "

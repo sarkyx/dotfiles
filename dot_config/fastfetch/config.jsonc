@@ -10,14 +10,14 @@
 		"disableLinewrap": true,
 		"separator": null, 
 		"key": {
-      			"width": 12,
+			"width": 12,
 			"type": "both"
-      		},
+		},
 		"bar": {
-		        "width": 8,
-        		"char": {
+				"width": 8,
+				"char": {
 				"elapsed": "*",
-        			"total": "-"
+				"total": "-"
 			}
 		},
 		"constants": [
@@ -107,11 +107,11 @@
 			"keyColor": "green",
 			"outputColor": "yellow",
 			"format": "{percentage-bar} {percentage} [{used}]",
-		        "percent": {
-        			"type": 3,
-        		    	"green": 30,
-            			"yellow": 70
-        		}
+			"percent": {
+				"type": 3,
+				"green": 30,
+				"yellow": 70
+			}
 		},
 		{
 			"type": "disk",
@@ -120,11 +120,11 @@
 			"keyColor": "green",
 			"outputColor": "yellow",
 			"format": "{size-percentage-bar} {size-percentage} [{mountpoint}]",
-		        "percent": {
-        			"type": 3,
-        		    	"green": 30,
-            			"yellow": 70
-        		}
+			"percent": {
+				"type": 3,
+				"green": 30,
+				"yellow": 70
+			}
 		},
 		{
 			"type": "custom",
