@@ -36,7 +36,7 @@ animations {
 }
 
 /// SHADERS
-include "shaders/reg/open/blur-glitch.kdl"
-include "shaders/reg/close/blur-glitch.kdl"
-include "shaders/reg/resize/aberration.kdl"
+include "shaders/win/open/blur-glitch.kdl"
+include "shaders/win/close/blur-glitch.kdl"
+include "shaders/win/resize/aberration.kdl"
 
