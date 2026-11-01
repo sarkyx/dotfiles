@@ -53,3 +53,8 @@ gestures {
 		off
 	}
 }
+
+// tmp
+binds {
+	Mod+B { spawn-sh "neowall reload"; }
+}

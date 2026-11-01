@@ -67,9 +67,9 @@
 		(
 			kind: Group([
 				(kind: Property(Disc)),
-			(kind: Text("-")),
-	    ])
-	),
+				(kind: Text("-")),
+			])
+		),
 		(
 			kind: Group([
 				(kind: Property(Track)),
@@ -231,7 +231,7 @@
 		"queue_info": Pane(Property(
 			content: [
 				(kind: Property(Status(QueueLength()))),
-				(kind: Text(" SONGS :: ")),
+				(kind: Text(" TRACKS :: ")),
 				(kind: Property(Status(QueueTimeTotal()))),
 				(kind: Text(" TOTAL ")),
 			], align: Left,

@@ -9,7 +9,7 @@ disable_image_preview = false
 show_avatars = true
 
 # Render inline image previews for attachments and embeds.
-show_images = true
+show_images = false
 
 # Allow video and audio media to open in an external player.
 media_playback = false
@@ -24,7 +24,7 @@ attachment_viewer_quality = "original"
 # Each animated frame rebuilds a terminal graphics protocol, so "always" costs
 # roughly 8% of a CPU core per animated preview on screen. Custom emoji animate
 # regardless; theirs are small enough not to matter.
-animate_previews = "always"
+animate_previews = "never"
 
 # Render custom Discord emoji as images when possible.
 show_custom_emoji = true
