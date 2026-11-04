@@ -65,7 +65,7 @@ done
 
 cmd=($cmd)
 
-if [ $#flg = 0 ]; then
+if [ $#flg -eq 0 ]; then
 	flg=("none")
 fi
 
@@ -125,7 +125,7 @@ else
 fi
 
 # playlist logic
-if [ $playlist = 1 ]; then
+if [ $playlist -eq 1 ]; then
 	prevwin='top,50%'
 	binds='ctrl-o:select-all,ctrl-x:deselect-all,ctrl-n:toggle-all,enter:print(//MPMOD:CLEAR)+accept,ctrl-space:print(//MPMOD:TAILP)+accept,alt-space:print(//MPMOD:NEXTP)+accept,ctrl-bs:print(//MPMOD:TAILQ)+accept,alt-bs:print(//MPMOD:NEXTQ)+accept'
 	
@@ -217,7 +217,7 @@ if ! [[ "$mp" == "" ]]; then
 			sleep $psleep
 			mpc -q play
 		else
-			if ! [ $insert = 1 ]; then
+			if ! [ $insert -eq 1 ]; then
 				mpc -q play $(( qs + 1 ))
 			else
 				mpc -q next
