@@ -144,7 +144,7 @@ if [ $playlist -eq 1 ]; then
 		fi
 	done
 	
-	if ! [[ "$mpl" == "" ]]; then
+	if ! [[ -z $mpl ]]; then
 		qs=$(mpc playlist|wc -l)
 		if ! [ $keep -eq 1 ]; then mpc -q clear; fi
 		for i in $mpla; do mpc -q load "$i" > /dev/null; done
@@ -204,7 +204,7 @@ for i in {1..$#mpa}; do
 	fi
 done
 
-if ! [[ "$mp" == "" ]]; then
+if ! [[ -z $mp ]]; then
 	qs=$(mpc playlist|wc -l)
 	if ! [ $keep -eq 1 ]; then mpc -q clear; fi
 	if ! [ $insert -eq 1 ]; then
