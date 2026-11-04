@@ -10,10 +10,10 @@ insert=0
 keep=0
 queue=0
 blocks=0
-desktop=0
+noclear=0
 playlist=0
 
-playsleep='0.1'
+psleep='0.1'
 
 banner() {
 	echo
@@ -32,18 +32,17 @@ banner() {
 DEPS=('mpc' 'fzf' 'chafa' 'ffmpeg' 'exiftool')
 for dep in $DEPS; do whence -p $dep &>/dev/null || { echo -e "[mp!] mp relies on $dep\n[mp/] aborting"; exit 1 }; done
 
-export MUSDIR="${USR_MUSIC_DIR:-$XDG_MUSIC_DIR}"
+export MP_MUSDIR="${USR_MUSIC_DIR:-$XDG_MUSIC_DIR}"
 
 ### parsing
 
 flg=()
 flgraw=()
 prs-flg() {
-	local arg=$1
-	case "$arg" in
+	case "$1" in
 		"h" | "help") flg+=("HELP") ;;
 		"b" | "blocks") flg+=("BLOCKS") ;;
-		"d" | "desktop") flg+=("DESKTOP") ;;
+		"d" | "no-clear") flg+=("NOCLEAR") ;;
 		"p" | "playlist") flg+=("PLAYLIST") ;;
 		*) flg+=("unknown") ;;
 	esac
@@ -52,7 +51,7 @@ prs-flg() {
 for i in {1..$#cmd}; do
 	if [[ ${cmd[$i]:0:1} == "-" ]]; then
 		if [[ ! ${cmd[$i]:1:1} == '-' ]]; then
-			for o in $(echo -n ${cmd[$i]:1} | grep -o .); do
+			for o in $(print -rl -- ${(s::)cmd[$i]:1}); do
 				flgraw+=("$o")
 				prs-flg "$o"
 			done
@@ -84,8 +83,8 @@ for i in {1..$#flg}; do
 			echo "[.] -b | --blocks"
 			echo "[,]    renders using blocks instead of"
 			echo "[,]    kitty's icat functionality"
-			echo "[.] -d | --desktop"
-			echo "[,]    enables desktop shell mode"
+			echo "[.] -d | --no-clear"
+			echo "[,]    does not clear fzf's tui"
 			echo "[.] -p | --playlist"
 			echo "[,]    selects playlists instead of songs"
 			echo "[.] -h | --help"
@@ -107,7 +106,7 @@ for i in {1..$#flg}; do
 			exit 0
 			;;
 		"BLOCKS") blocks=1 ;;
-		"DESKTOP") desktop=1 ;;
+		"NOCLEAR") noclear=1 ;;
 		"PLAYLIST") playlist=1 ;;
 		*)
 			echo "[mp!] catastrophic error while parsing flags"
@@ -119,24 +118,23 @@ done
 
 ### main
 
-if ! [ $desktop = 1 ]; then
+if ! [ $noclear -eq 1 ]; then
 	cls='--clear'
 else
 	cls='--no-clear'
-	if [[ $TERM = "xterm-kitty" ]]; then ~/.config/kitty/startup.sh &>/dev/null; fi
 fi
 
 # playlist logic
 if [ $playlist = 1 ]; then
 	prevwin='top,50%'
-	binds='ctrl-o:select-all,ctrl-x:deselect-all,ctrl-n:toggle-all,enter:print(MPMODE::CLEAR)+accept,ctrl-space:print(MPMODE::TAILP)+accept,alt-space:print(MPMODE::NEXTP)+accept,ctrl-bs:print(MPMODE::TAILQ)+accept,alt-bs:print(MPMODE::NEXTQ)+accept'
+	binds='ctrl-o:select-all,ctrl-x:deselect-all,ctrl-n:toggle-all,enter:print(//MPMOD:CLEAR)+accept,ctrl-space:print(//MPMOD:TAILP)+accept,alt-space:print(//MPMOD:NEXTP)+accept,ctrl-bs:print(//MPMOD:TAILQ)+accept,alt-bs:print(//MPMOD:NEXTQ)+accept'
 	
 	mpl=$(mpc lsplaylists|fzf --gap --gap-line='─' --preview 'mpc playlist {}' --preview-window="$prevwin" "$cls" --bind "$binds" --query "$cmd")
 	
 	mpla=( ${(f)mpl} )
 	
 	for i in {1..$#mpla}; do
-		if [[ ${mpla[$i][1,8]} == "MPMODE::" ]]; then
+		if [[ ${mpla[$i][1,8]} == "//MPMOD:" ]]; then
 			case "${mpla[$i]:8}" in
 				"TAILP" | "NEXTP") keep=1; queue=0; mpla[$i]=() ;;
 				"TAILQ" | "NEXTQ") keep=1; queue=1; mpla[$i]=() ;;
@@ -148,14 +146,14 @@ if [ $playlist = 1 ]; then
 	
 	if ! [[ "$mpl" == "" ]]; then
 		qs=$(mpc playlist|wc -l)
-		if ! [ $keep = 1 ]; then mpc -q clear; fi
+		if ! [ $keep -eq 1 ]; then mpc -q clear; fi
 		for i in $mpla; do mpc -q load "$i" > /dev/null; done
-		if ! [ $queue = 1 ]; then
-			if [ $keep = 1 ]; then
-				mpc -q play $(( qs + 1 ))
-			else
-				sleep $playsleep
+		if ! [ $queue -eq 1 ]; then
+			if ! [ $keep -eq 1 ]; then
+				sleep $psleep
 				mpc -q play
+			else
+				mpc -q play $(( qs + 1 ))
 			fi
 		fi
 	fi
@@ -165,13 +163,13 @@ fi
 
 # non-playlist
 
-exif_grab='exiftool -Picture -q -q -b $MUSDIR/{1}'
-ffmpeg_grab='ffmpeg -loglevel quiet -i file:$MUSDIR/{1} -an -c:v copy -f image2pipe -'
+exif_grab='exiftool -Picture -q -q -b $MP_MUSDIR/{1}'
+ffmpeg_grab='ffmpeg -loglevel quiet -i file:$MP_MUSDIR/{1} -an -c:v copy -f image2pipe -'
 mpc_grab='mpc readpicture {1}'
 
-sp_chafa_img='chafa - -f symbols --animate=off --stretch --size="$FZF_PREVIEW_COLUMNS"x"$FZF_PREVIEW_LINES"'
+sp_chafa_img='chafa - -f symbols --animate=off --stretch --size=${FZF_PREVIEW_COLUMNS}x${FZF_PREVIEW_LINES}'
 
-kp_chafa_img='chafa - -f kitty --animate=off --threshold 1.0 --bg black --stretch --size=$(( FZF_PREVIEW_COLUMNS < FZF_PREVIEW_LINES * 2 ? FZF_PREVIEW_COLUMNS : (FZF_PREVIEW_LINES * 3 > FZF_PREVIEW_COLUMNS ? FZF_PREVIEW_COLUMNS : FZF_PREVIEW_LINES * 2) ))x"$FZF_PREVIEW_LINES"'
+kp_chafa_img='chafa - -f kitty --animate=off --threshold 1.0 --bg black --stretch --size=$(( FZF_PREVIEW_COLUMNS < FZF_PREVIEW_LINES * 2 ? FZF_PREVIEW_COLUMNS : (FZF_PREVIEW_LINES * 3 > FZF_PREVIEW_COLUMNS ? FZF_PREVIEW_COLUMNS : FZF_PREVIEW_LINES * 2) ))x${FZF_PREVIEW_LINES}'
 kp_txt_prefx='%$(( FZF_PREVIEW_LINES * 2 ))s \\033[0;90m▌'
 kp_txt_col0='\\033[0m'
 kp_txt_col1='\\033[1;32m'
@@ -181,11 +179,11 @@ kittyprev="printf \"${kp_txt_prefx} ${kp_txt_col1}TITLE:${kp_txt_col0} \$(mpc -f
 
 symbolsprev="{ ${exif_grab} || ${ffmpeg_grab} || ${mpc_grab} } | ${sp_chafa_img} 2>/dev/null || echo"
 
-binds='ctrl-l:execute(clear),ctrl-o:select-all,ctrl-x:deselect-all,ctrl-n:toggle-all,f1:reload(mpc listall -f %file%\\t$MPC_FORMAT)+change-preview-label(),f2:reload(mpc listall -f %file%\\t$MPC_FORMAT|shuf)+change-preview-label([ SHUF ]),f3:change-with-nth(1|2),f4:execute-silent(mpc -q crop),enter:print(MPMODE::CLEAR)+accept,ctrl-space:print(MPMODE::TAILP)+accept,alt-space:print(MPMODE::NEXTP)+accept,ctrl-bs:print(MPMODE::TAILQ)+accept,alt-bs:print(MPMODE::NEXTQ)+accept'
+binds='ctrl-l:execute(clear),ctrl-o:select-all,ctrl-x:deselect-all,ctrl-n:toggle-all,f1:reload(mpc listall -f %file%\\t$MPC_FORMAT)+change-preview-label(),f2:reload(mpc listall -f %file%\\t$MPC_FORMAT|shuf)+change-preview-label([ SHUF ]),f3:change-with-nth(1|2),f4:execute-silent(mpc -q crop),enter:print(//MPMOD:CLEAR)+accept,ctrl-space:print(//MPMOD:TAILP)+accept,alt-space:print(//MPMOD:NEXTP)+accept,ctrl-bs:print(//MPMOD:TAILQ)+accept,alt-bs:print(//MPMOD:NEXTQ)+accept'
 
 prevwin='top,50%'
 
-if ! [ $blocks = 1 ]; then
+if ! [ $blocks -eq 1 ]; then
 	mp=$(mpc listall -f %file%\\t"$MPC_FORMAT"|fzf +s -d "\t" --with-nth 2 --accept-nth 1 --preview "$kittyprev" --preview-window="$prevwin" "$cls" --bind "$binds" --query "$cmd")
 else
 	mp=$(mpc listall -f %file%\\t"$MPC_FORMAT"|fzf +s -d "\t" --with-nth 2 --accept-nth 1 --preview "$symbolsprev" --preview-window="$prevwin" "$cls" --bind "$binds" --query "$cmd")
@@ -194,7 +192,7 @@ fi
 mpa=( ${(f)mp} )
 
 for i in {1..$#mpa}; do
-	if [[ ${mpa[$i][1,8]} == "MPMODE::" ]]; then
+	if [[ ${mpa[$i][1,8]} == "//MPMOD:" ]]; then
 		case "${mpa[$i]:8}" in
 			"TAILP") keep=1; insert=0; queue=0; mpa[$i]=() ;;
 			"NEXTP") keep=1; insert=1; queue=0; mpa[$i]=() ;;
@@ -208,22 +206,22 @@ done
 
 if ! [[ "$mp" == "" ]]; then
 	qs=$(mpc playlist|wc -l)
-	if ! [ $keep = 1 ]; then mpc -q clear; fi
-	if ! [ $insert = 1 ]; then 
+	if ! [ $keep -eq 1 ]; then mpc -q clear; fi
+	if ! [ $insert -eq 1 ]; then
 		for i in $mpa; do mpc -q add "$i"; done
-	else 
+	else
 		for i in $mpa; do mpc -q insert "$i"; done
 	fi
-	if ! [ $queue = 1 ]; then 
-		if [ $keep = 1 ]; then
-			if [ $insert = 1 ]; then
-				mpc -q next
-			else
-				mpc -q play $(( qs + 1 ))
-			fi
-		else
-			sleep $playsleep
+	if ! [ $queue -eq 1 ]; then
+		if ! [ $keep -eq 1 ]; then
+			sleep $psleep
 			mpc -q play
+		else
+			if ! [ $insert = 1 ]; then
+				mpc -q play $(( qs + 1 ))
+			else
+				mpc -q next
+			fi
 		fi
 	fi
 fi
