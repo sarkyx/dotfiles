@@ -30,7 +30,7 @@ banner() {
 }
 
 DEPS=('mpc' 'fzf' 'chafa' 'ffmpeg' 'exiftool')
-for dep in $DEPS; do whence -p $dep &>/dev/null || { echo -e "[mp!] mp relies on $dep\n[mp/] aborting"; exit 1 }; done
+for dep in $DEPS; do whence $dep &>/dev/null || { echo -e "[mp!] mp relies on $dep\n[mp/] aborting"; exit 1 }; done
 
 export MP_MUSDIR="${USR_MUSIC_DIR:-$XDG_MUSIC_DIR}"
 
