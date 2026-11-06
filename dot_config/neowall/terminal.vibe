@@ -1,0 +1,3 @@
+default {
+	terminal "drift -s pipes"
+}

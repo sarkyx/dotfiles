@@ -1,6 +1,5 @@
 # environment
-for f in ~/.env/*; do source "$f"; done
+for f in ~/.env/*; do source "$f" &>/dev/null; done
 
 # path
-export PATH="$PATH:$HOME/.sh"
-export PATH="$PATH:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/.sh:$HOME/.cargo/bin"

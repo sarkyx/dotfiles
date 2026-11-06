@@ -1,0 +1,7 @@
+default {
+	path ~/.vis/wall/img/miasma/
+	duration 15
+	transition glitch
+	mode fill
+	transition_duration 10
+}

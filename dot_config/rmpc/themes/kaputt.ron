@@ -231,7 +231,7 @@
 		"queue_info": Pane(Property(
 			content: [
 				(kind: Property(Status(QueueLength()))),
-				(kind: Text(" TRACKS :: ")),
+				(kind: Text(" TRAX :: ")),
 				(kind: Property(Status(QueueTimeTotal()))),
 				(kind: Text(" TOTAL ")),
 			], align: Left,
