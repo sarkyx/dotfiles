@@ -2,8 +2,18 @@ import Quickshell
 import QtQuick
 import ".."
 
-ShellRoot {
+Scope {
 	id: root
+	required property var parentBar
+
+	Timer {
+		interval: 1000
+		running: true
+		repeat: true
+		onTriggered: {
+			console.log(appDisplay.xEnd)
+		}
+	}
 	
 	PanelWindow {
 		id: appDisplay
@@ -16,10 +26,10 @@ ShellRoot {
 			right: true
 		}
 		
-		property real visualWidth: root.parentBar.visualWidth
+		property real visualWidth: root.parentBar.mb.visualWidth
 		
-		property real xStart: root.parentBar.xStart
-		property real xEnd: root.parentBar.xEnd
+		property real xStart: root.parentBar.mb.xStart
+		property real xEnd: root.parentBar.mb.xEnd
 		
 		Canvas {
 			id: adVisual

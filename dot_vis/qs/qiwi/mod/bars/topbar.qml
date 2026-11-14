@@ -38,6 +38,7 @@ PanelWindow {
 		}
 	}
 	
+	property alias mb: midBar
 	PanelWindow {
 		id: midBar
 		screen: root.screen
@@ -118,7 +119,7 @@ PanelWindow {
 		
 		Timer {
 			interval: 500
-			running: true 
+			running: true
 			repeat: true
 			onTriggered: {
 				midBar.active = true
@@ -156,6 +157,7 @@ PanelWindow {
 		}
 	}
 	
+	property alias lb: leftBar
 	PanelWindow {
 		id: leftBar
 		screen: root.screen
@@ -244,7 +246,8 @@ PanelWindow {
 			}
 		}
 	}
-
+	
+	property alias rb: rightBar
 	PanelWindow {
 		id: rightBar
 		screen: root.screen

@@ -14,10 +14,13 @@ ShellRoot {
 		model: Quickshell.screens
 		
 		delegate: TopBar {
+			id: topBar
 			property var modelData
 			screen: modelData
 			
-			Launcher {}
+			Launcher {
+				parentBar: topBar
+			}
 		}
 	}
 }
