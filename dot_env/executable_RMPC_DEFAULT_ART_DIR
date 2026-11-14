@@ -1,1 +1,1 @@
-export RMPC_DEFAULT_ART_DIR="$HOME/.vis/wall/img/miasma"
+export RMPC_DEFAULT_ART_DIR="$HOME/.ui/wall/img/miasma"

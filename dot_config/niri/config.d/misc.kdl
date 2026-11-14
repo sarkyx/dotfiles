@@ -4,7 +4,7 @@ hotkey-overlay {
 
 prefer-no-csd
 
-screenshot-path "~/MDL/wastes/scr/%Y-%m-%d-%H-%M-%S.png"
+screenshot-path "~/XYZ/img/ss/%d.%m.%y-%H.%M.%S.png"
 
 blur {
 	on

@@ -1,22 +1,27 @@
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
-rev = "58c4f4e"
-hash = "f281261ff04ad7ec867c3f802a50835f"
+rev = "1ef5fe0"
+hash = "17ebde15c4349f90aedbc45984b98db2"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "58c4f4e"
-hash = "5bb0bfab901d3601c370eafdd66edd31"
+rev = "1ef5fe0"
+hash = "347cc6b190eb0c2fd60513cc7ae37412"
 
 [[plugin.deps]]
 use = "AminurAlam/yazi-plugins:preview-audio"
-rev = "9997d5b"
-hash = "475141b0337cf9934b0bc81202e2537c"
+rev = "aebeaa7"
+hash = "6f01d98391ba55868fd5cdc753aa94d5"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:piper"
-rev = "58c4f4e"
-hash = "45a533508a9840cc5a10cf6129f63e6a"
+rev = "1ef5fe0"
+hash = "d1e0499cae5f3aeb628c267616d4b682"
+
+[[plugin.deps]]
+use = "WhoSowSee/whoosh"
+rev = "cad8079"
+hash = "f6c11dc58d674764a4dd20e644138534"
 
 [flavor]
 deps = []

@@ -36,7 +36,7 @@ case "${cmd[0]}" in
 	"mpd") $EDITOR ~/.config/mpd/mpd.conf ;;
 	"mpd-service") sudo $EDITOR /usr/lib/systemd/user/mpd.service ;;
 	"rmpc") $EDITOR ~/.config/rmpc/config.ron ;;
-	"rmpc-theme") $EDITOR ~/.config/rmpc/themes/cha.ron ;;
+	"rmpc-theme") $EDITOR ~/.config/rmpc/themes/neu.ron ;;
 	"rmpc-change") $EDITOR ~/.config/rmpc/change.sh ;;
 	"kitty") $EDITOR ~/.config/kitty/kitty.conf ;;
 	"kitty-colors") $EDITOR ~/.config/wallust/templates/kitty ;;
@@ -52,7 +52,8 @@ case "${cmd[0]}" in
 	"zsh-env") $EDITOR ~/.oh-my-zsh/custom/env.zsh ;;
 	"zsh-theme") $EDITOR ~/.oh-my-zsh/custom/themes/vira.zsh-theme ;;
 	"wallust") $EDITOR ~/.config/wallust/wallust.toml ;;
-	"cava") $EDITOR ~/.config/wallust/templates/cava ;;
+	"cava") $EDITOR ~/.config/cava/config ;;
+	"cava-theme") $EDITOR ~/.config/wallust/templates/cava ;;
 	"drift") $EDITOR ~/.config/wallust/templates/drift ;;
 	"alacritty") $EDITOR ~/.config/alacritty/alacritty.toml ;;
 	"fastfetch") $EDITOR ~/.config/fastfetch/config.jsonc ;;

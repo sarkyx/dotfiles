@@ -6,8 +6,8 @@
 # absolute path. No other format is supported.
 # 
 XDG_DESKTOP_DIR="$HOME/ARX"
-XDG_DOWNLOAD_DIR="$HOME/MDL"
-XDG_MUSIC_DIR="$HOME/MZK"
+XDG_DOWNLOAD_DIR="$HOME/XYZ/mdl"
+XDG_MUSIC_DIR="$HOME/REC"
 XDG_TEMPLATES_DIR="$HOME/.xdg/tmpl"
 XDG_PUBLICSHARE_DIR="$HOME/.xdg/pubs"
 XDG_DOCUMENTS_DIR="$HOME/.xdg/docs"

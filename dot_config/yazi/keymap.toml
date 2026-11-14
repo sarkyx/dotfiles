@@ -88,12 +88,12 @@ keymap = [
 	{ on = "Z",         run = "plugin zoxide",               desc = "Jump to a directory via zoxide" },
 
 	# Linemode
-	{ on = [ "m", "s" ], run = "linemode size",        desc = "Linemode: size" },
-	{ on = [ "m", "p" ], run = "linemode permissions", desc = "Linemode: permissions" },
-	{ on = [ "m", "b" ], run = "linemode btime",       desc = "Linemode: btime" },
-	{ on = [ "m", "m" ], run = "linemode mtime",       desc = "Linemode: mtime" },
-	{ on = [ "m", "o" ], run = "linemode owner",       desc = "Linemode: owner" },
-	{ on = [ "m", "n" ], run = "linemode none",        desc = "Linemode: none" },
+	{ on = [ "u", "s" ], run = "linemode size",        desc = "Linemode: size" },
+	{ on = [ "u", "p" ], run = "linemode permissions", desc = "Linemode: permissions" },
+	{ on = [ "u", "b" ], run = "linemode btime",       desc = "Linemode: btime" },
+	{ on = [ "u", "m" ], run = "linemode mtime",       desc = "Linemode: mtime" },
+	{ on = [ "u", "o" ], run = "linemode owner",       desc = "Linemode: owner" },
+	{ on = [ "u", "n" ], run = "linemode none",        desc = "Linemode: none" },
 
 	# Copy
 	{ on = [ "c", "c" ], run = "copy path",             desc = "Copy file URL" },
@@ -159,6 +159,66 @@ keymap = [
 	{ on = "~",    run = "help", desc = "Open help" },
 	{ on = "<F1>", run = "help", desc = "Open help" },
 ]
+
+[[mgr.prepend_keymap]]
+on = "'"
+run = "plugin whoosh jump_by_key"
+desc = "goto mark"
+
+# Direct fuzzy search access
+[[mgr.prepend_keymap]]
+on = '"'
+run = "plugin whoosh jump_by_fzf"
+desc = "fzf search marks"
+
+# Basic bookmark operations
+[[mgr.prepend_keymap]]
+on = [ "m", "a" ]
+run = "plugin whoosh save"
+desc = "perm mark (hov)"
+
+[[mgr.prepend_keymap]]
+on = [ "m", "A" ]
+run = "plugin whoosh save_cwd"
+desc = "perm mark (cwd)"
+
+# Temporary bookmarks
+[[mgr.prepend_keymap]]
+on = [ "m", "t" ]
+run = "plugin whoosh save_temp"
+desc = "temp mark (hov)"
+
+[[mgr.prepend_keymap]]
+on = [ "m", "T" ]
+run = "plugin whoosh save_cwd_temp"
+desc = "temp mark (cwd)"
+
+# Delete bookmarks
+[[mgr.prepend_keymap]]
+on = [ "m", "x" ]
+run = "plugin whoosh delete_by_key"
+desc = "delete mark (key)"
+
+[[mgr.prepend_keymap]]
+on = [ "m", "X" ]
+run = "plugin whoosh delete_by_fzf"
+desc = "delete mark (fzf)"
+
+[[mgr.prepend_keymap]]
+on = [ "m", "d" ]
+run = "plugin whoosh delete_all"
+desc = "delete all marks"
+
+# Rename bookmarks
+[[mgr.prepend_keymap]]
+on = [ "m", "r" ]
+run = "plugin whoosh rename_by_key"
+desc = "rename mark (key)"
+
+[[mgr.prepend_keymap]]
+on = [ "m", "R" ]
+run = "plugin whoosh rename_by_fzf"
+desc = "rename mark (fzf)"
 
 [tasks]
 
@@ -375,3 +435,4 @@ keymap = [
 	{ on = "<C-p>", run = "arrow prev", desc = "Previous line" },
 	{ on = "<C-n>", run = "arrow next", desc = "Next line" },
 ]
+

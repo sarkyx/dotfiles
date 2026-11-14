@@ -44,7 +44,7 @@ palette = "saliencedark"
 #no_hooks = true
 
 [templates]
-cava = { template = "cava", target = "~/.config/cava/config" }
+cava = { template = "cava", target = "~/.config/cava/themes/term" }
 kitty = { template = "kitty", target = "~/.config/kitty/colors.conf" }
 rofi = { template = "rofi", target = "~/.local/share/rofi/themes/material-wallust.rasi" }
 drift = { template = "drift", target = "~/.config/drift/config.toml" }
