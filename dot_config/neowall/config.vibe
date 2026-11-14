@@ -1,4 +1,0 @@
-default {
-	shader "kibmarcher.glsl"
-	shader_speed 1
-}
