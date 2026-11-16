@@ -15,7 +15,7 @@ PanelWindow {
 	exclusiveZone: Config.style.TopBar.exclusiveZoneBool ? Math.max(midBar.height + midBar.y, leftBar.height + leftBar.y, rightBar.height + rightBar.y) : 0
 	
 	function _hextorgba(hex, alpha) {
-		const cleanHex = hex.replace("#","");
+		const cleanHex = Qt.color(hex).toString().replace("#","");
 		
 		const r = parseInt(cleanHex.substring(0,2), 16);
 		const g = parseInt(cleanHex.substring(2,4), 16);
@@ -23,7 +23,6 @@ PanelWindow {
 		
 		return Qt.rgba(r / 255, g / 255, b / 255, alpha)
 	}
-	
 	
 	component EaseAnim: Behavior {
 		NumberAnimation {
@@ -48,7 +47,6 @@ PanelWindow {
 		
 		property int y: active ? -borderWidth / 2 : -height - (borderWidth / 2)
 		EaseAnim on y {}
-		onYChanged: mbVisual.requestPaint()
 		property int x: 0
 		
 		property int xStart: (screen.width / 2) - (width / 2)
@@ -57,12 +55,9 @@ PanelWindow {
 		implicitWidth: (screen.width * Config.style.TopBar.midSizePrc) + borderWidth
 		implicitHeight: Config.style.TopBar.panelHeightPx
 		property real slant: Math.min(visualWidth / 3, Config.style.TopBar.panelSlantPx)
-		onSlantChanged: mbVisual.requestPaint()
 		
 		property real visualWidth: width - borderWidth
-		onVisualWidthChanged: mbVisual.requestPaint()
 		property real visualHeight: height
-		onVisualHeightChanged: mbVisual.requestPaint()
 		
 		exclusionMode: ExclusionMode.Ignore
 		property real borderWidth: Math.max(0, Math.min(visualHeight / 3, Config.style.TopBar.borderWidth))
@@ -89,6 +84,23 @@ PanelWindow {
 		property bool active: false
 		property bool visible: true
 		
+		property real x1: x + borderWidth
+		onX1Changed: mbVisual.requestPaint()
+		property real y1: y
+		onY1Changed: mbVisual.requestPaint()
+		property real x2: x + borderWidth + slant
+		onX2Changed: mbVisual.requestPaint()
+		property real y2: y + visualHeight
+		onY2Changed: mbVisual.requestPaint()
+		property real x3: x + visualWidth - slant
+		onX3Changed: mbVisual.requestPaint()
+		property real y3: y + visualHeight
+		onY3Changed: mbVisual.requestPaint()
+		property real x4: x + visualWidth
+		onX4Changed: mbVisual.requestPaint()
+		property real y4: y
+		onY4Changed: mbVisual.requestPaint()
+
 		Canvas {
 			id: mbVisual
 			
@@ -99,10 +111,10 @@ PanelWindow {
 				ctx.reset();
 				
 				if (midBar.visible) {
-					ctx.moveTo(midBar.x + midBar.borderWidth, midBar.y);
-					ctx.lineTo(midBar.x + midBar.borderWidth + midBar.slant, midBar.y + midBar.visualHeight);
-					ctx.lineTo(midBar.x + midBar.visualWidth - midBar.slant, midBar.y + midBar.visualHeight);
-					ctx.lineTo(midBar.x + midBar.visualWidth, midBar.y);
+					ctx.moveTo(mb.x1, mb.y1);
+					ctx.lineTo(mb.x2, mb.y2);
+					ctx.lineTo(mb.x3, mb.y3);
+					ctx.lineTo(mb.x4, mb.y4);
 					ctx.closePath();
 					
 					ctx.fillStyle = mbColors.background;
@@ -171,19 +183,14 @@ PanelWindow {
 		
 		property int y: active ? -borderWidth / 2 : -height - (borderWidth / 2)
 		EaseAnim on y {}
-		onYChanged: lbVisual.requestPaint()
 		property int x: Math.min(Math.max(screen.width * Config.style.TopBar.sideMarginPrc, midBar.xStart - (midBar.visualWidth * Config.style.TopBar.periphSizePrc)), midBar.xStart)
-		onXChanged: lbVisual.requestPaint()
 		
 		implicitWidth: midBar.xStart + borderWidth
 		implicitHeight: Config.style.TopBar.panelHeightPx
 		property real slant: Math.min(visualWidth / 3, Config.style.TopBar.panelSlantPx)
-		onSlantChanged: lbVisual.requestPaint()
 		
 		property real visualWidth: midBar.xStart - leftBar.x
-		onVisualWidthChanged: lbVisual.requestPaint()
 		property real visualHeight: height
-		onVisualHeightChanged: lbVisual.requestPaint()
 		
 		exclusionMode: ExclusionMode.Ignore
 		property real borderWidth: Math.max(0, Math.min(visualHeight / 3, Config.style.TopBar.borderWidth))
@@ -218,6 +225,23 @@ PanelWindow {
 			}
 		}
 		
+		property real x1: x
+		onX1Changed: lbVisual.requestPaint()
+		property real y1: y
+		onY1Changed: lbVisual.requestPaint()
+		property real x2: x + slant
+		onX2Changed: lbVisual.requestPaint()
+		property real y2: y + visualHeight
+		onY2Changed: lbVisual.requestPaint()
+		property real x3: x + visualWidth
+		onX3Changed: lbVisual.requestPaint()
+		property real y3: y + visualHeight
+		onY3Changed: lbVisual.requestPaint()
+		property real x4: x + visualWidth - slant
+		onX4Changed: lbVisual.requestPaint()
+		property real y4: y
+		onY4Changed: lbVisual.requestPaint()
+		
 		Canvas {
 			id: lbVisual
 			
@@ -228,10 +252,10 @@ PanelWindow {
 				ctx.reset();
 				
 				if (leftBar.visible) {
-					ctx.moveTo(leftBar.x, leftBar.y);
-					ctx.lineTo(leftBar.x + leftBar.slant, leftBar.y + leftBar.visualHeight);
-					ctx.lineTo(leftBar.x + leftBar.visualWidth, leftBar.y + leftBar.visualHeight);
-					ctx.lineTo(leftBar.x + leftBar.visualWidth - leftBar.slant, leftBar.y);
+					ctx.moveTo(lb.x1, lb.y1);
+					ctx.lineTo(lb.x2, lb.y2);
+					ctx.lineTo(lb.x3, lb.y3);
+					ctx.lineTo(lb.x4, lb.y4);
 					ctx.closePath();
 					
 					ctx.fillStyle = lbColors.background;
@@ -261,18 +285,14 @@ PanelWindow {
 		
 		property int y: active ? -borderWidth / 2 : -height - (borderWidth / 2)
 		EaseAnim on y {}
-		onYChanged: rbVisual.requestPaint()
 		property int x: 0
 		
 		implicitWidth: screen.width - midBar.xEnd + borderWidth
 		implicitHeight: Config.style.TopBar.panelHeightPx
 		property real slant: Math.min(visualWidth / 3, Config.style.TopBar.panelSlantPx)
-		onSlantChanged: rbVisual.requestPaint()
 		
 		property real visualWidth: Math.max(0, Math.min(midBar.visualWidth * Config.style.TopBar.periphSizePrc, Math.max(width - (screen.width * Config.style.TopBar.sideMarginPrc))))
-		onVisualWidthChanged: rbVisual.requestPaint()
 		property real visualHeight: height
-		onVisualHeightChanged: rbVisual.requestPaint()
 		
 		exclusionMode: ExclusionMode.Ignore
 		property real borderWidth: Math.max(0, Math.min(visualHeight / 3, Config.style.TopBar.borderWidth))
@@ -301,12 +321,29 @@ PanelWindow {
 		
 		Timer {
 			interval: 1000
-			running: true 
+			running: true
 			repeat: true
 			onTriggered: {
 				rightBar.active = true
 			}
 		}
+		
+		property real x1: x + borderWidth + slant
+		onX1Changed: rbVisual.requestPaint()
+		property real y1: y
+		onY1Changed: rbVisual.requestPaint()
+		property real x2: x + borderWidth
+		onX2Changed: rbVisual.requestPaint()
+		property real y2: y + visualHeight
+		onY2Changed: rbVisual.requestPaint()
+		property real x3: x + visualWidth - slant
+		onX3Changed: rbVisual.requestPaint()
+		property real y3: y + visualHeight
+		onY3Changed: rbVisual.requestPaint()
+		property real x4: x + visualWidth
+		onX4Changed: rbVisual.requestPaint()
+		property real y4: y
+		onY4Changed: rbVisual.requestPaint()
 		
 		Canvas {
 			id: rbVisual
@@ -318,10 +355,10 @@ PanelWindow {
 				ctx.reset();
 				
 				if (rightBar.visible) {
-					ctx.moveTo(rightBar.borderWidth + rightBar.x + rightBar.slant, rightBar.y);
-					ctx.lineTo(rightBar.borderWidth + rightBar.x, rightBar.y + rightBar.visualHeight);
-					ctx.lineTo(rightBar.x + rightBar.visualWidth - rightBar.slant, rightBar.y + rightBar.visualHeight);
-					ctx.lineTo(rightBar.x + rightBar.visualWidth, rightBar.y);
+					ctx.moveTo(rb.x1, rb.y1);
+					ctx.lineTo(rb.x2, rb.y2);
+					ctx.lineTo(rb.x3, rb.y3);
+					ctx.lineTo(rb.x4, rb.y4);
 					ctx.closePath();
 					
 					ctx.fillStyle = rbColors.background;

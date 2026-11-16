@@ -1,5 +1,5 @@
 default {
-	path ~/.vis/wall/img/miasma/
+	path ~/.ui/wall/img/miasma/
 	duration 15
 	transition glitch
 	mode fill

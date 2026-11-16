@@ -5,18 +5,19 @@ import ".."
 Scope {
 	id: root
 	required property var parentBar
-
+	
 	Timer {
 		interval: 1000
-		running: true
+		running: false
 		repeat: true
 		onTriggered: {
-			console.log(appDisplay.xEnd)
+			console.log(topDisplay.xStart + ' ' + topDisplay.xEnd)
 		}
 	}
 	
+	property alias td: topDisplay
 	PanelWindow {
-		id: appDisplay
+		id: topDisplay
 		screen: root.parentBar.screen
 		
 		anchors {
@@ -29,7 +30,9 @@ Scope {
 		property real visualWidth: root.parentBar.mb.visualWidth
 		
 		property real xStart: root.parentBar.mb.xStart
+		onXStartChanged: adVisual.requestPaint()
 		property real xEnd: root.parentBar.mb.xEnd
+		onXEndChanged: adVisual.requestPaint()
 		
 		Canvas {
 			id: adVisual
@@ -40,10 +43,10 @@ Scope {
 				var ctx = getContext("2d");
 				ctx.reset()
 				
-				ctx.moveTo(appDisplay.xStart,0)
-				ctx.lineTo(appDisplay.xStart,500)
-				ctx.lineTo(appDisplay.xEnd,500)
-				ctx.lineTo(appDisplay.xEnd,0)
+				ctx.moveTo(topDisplay.xStart,0)
+				ctx.lineTo(topDisplay.xStart,10)
+				ctx.lineTo(topDisplay.xEnd,10)
+				ctx.lineTo(topDisplay.xEnd,0)
 				ctx.closePath()
 				
 				ctx.fillStyle = Qt.rgba(1,0,0,0.75)
@@ -57,8 +60,9 @@ Scope {
 		exclusionMode: ExclusionMode.Ignore
 	}
 	
+	property alias bd: bottomDisplay
 	PanelWindow {
-		id: iconDisplay
+		id: bottomDisplay
 		
 		anchors {
 			left: true

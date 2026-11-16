@@ -71,7 +71,7 @@ Singleton {
 		},
 		
 		"Special": {
-			"background": config.dat.Colors?.Special?.background ?? "#000000",
+			"background": config.dat.Colors?.Special?.background ?? "black",
 			"foreground": config.dat.Colors?.Special?.foreground ?? "white",
 			"cursor": config.dat.Colors?.Special?.cursor ?? "white",
 			"border": config.dat.Colors?.Special?.border ?? "white"
@@ -85,9 +85,10 @@ Singleton {
 		},
 		
 		"TopBar": {
-			"borderWidth": config.dat.Style?.Global?.borderWidth ?? 2,
+			"borderWidth": config.dat.Style?.TopBar?.borderWidth ?? 2,
 			"animationSlowdown": Math.max(0, config.dat.Style?.TopBar?.animationSlowdown) ?? 1,
 			"periphSizePrc": Math.max(0, config.dat.Style?.TopBar?.periphSizePrc) ?? 0.5,
+			"periphCornerBool": Boolean(config.dat.Style?.TopBar?.periphCornerBool) ?? false,
 			"midSizePrc": config._clamp(config.dat.Style?.TopBar?.midSizePrc, 0, 1) ?? 0.25,
 			"sideMarginPrc": config._clamp(config.dat.Style?.TopBar?.sideMarginPrc, 0, 1) ?? 0,
 			"panelHeightPx": config.dat.Style?.TopBar?.panelHeightPx ?? 42,

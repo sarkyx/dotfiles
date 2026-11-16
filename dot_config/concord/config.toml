@@ -9,10 +9,10 @@ disable_image_preview = false
 show_avatars = true
 
 # Render inline image previews for attachments and embeds.
-show_images = false
+show_images = true
 
 # Allow video and audio media to open in an external player.
-media_playback = false
+media_playback = true
 
 # Preview quality: efficient, balanced, high, or original.
 image_preview_quality = "balanced"

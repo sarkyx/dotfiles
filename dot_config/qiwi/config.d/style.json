@@ -10,6 +10,7 @@
 			"animationSlowdown": 2,
 			"midSizePrc": 0.25,
 			"periphSizePrc": 0.5,
+			"periphCornerBool": false,
 			"sideMarginPrc": 0,
 			"panelHeightPx": 42,
 			"panelSlantPx": 36,
